@@ -23,6 +23,7 @@ body, html{
 
 .pimg1{
 	background-image:url('../img/image1-2.jpg');
+  
 	min-height:100%;
 	/*filter: grayscale(80%);*/
 	/*filter: brightness(0.5);*/

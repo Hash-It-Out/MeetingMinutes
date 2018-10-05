@@ -25,7 +25,7 @@ from .views import home_page,contact,login_user,signup_user,logout_user,index
 
 urlpatterns = [
 	url(r'^$', index),
-	url(r'^home/$', home_page),
+	url(r'^home/$', home_page, name="home"),
 	url(r'^login/$', login_user, name="login"),
     url(r'^signup/$', signup_user, name="signup"),
     url(r'^logout/$', logout_user, name="logout"),

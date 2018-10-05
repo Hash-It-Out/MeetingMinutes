@@ -1,70 +1,70 @@
 {% load static %}
 
-<!doctype html>
+<!DOCTYPE html>
 
 <head>
-	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
 </head>
 
 
 <body>
-  <div>
-      
-    
-        <button type="submit" name="action">WebsiteName
-            <i>send</i>
-          </button>
-        
+  	<!-- <section>
+        <button class="btn waves-effect waves-light btn-large black center-align" type="submit" name="action">WebsiteName
+            <i class="material-icons right">send</i>
+        </button>
+    </section> -->
      
-        
+    <div class="bg-image" style="width:100vw;overflow:none;background-image: url('{% static 'img/image1-2.jpg' %}');"></div>
+      	<!-- <br/><br/><br/><br/><br/><br/><br/> -->
+      	<!-- <img src="image1.jpg" class="brightness"> -->
+    <div class="row">
     
-    <div style="width:100vw;overflow:none"></div>
-      
-      
-        <div>
-    
-      <div>
+      	<div class="col s12 m4 offset-m4">
         
-        <div>
-          <div>
-            
-            <span style="color:rgb(0,0,0,0.8)">WELCOME BACK</span><br><hr><br>
-            <form action="http://login.php" method="POST" target="_blank" onsubmit="try {return window.confirm(&quot;You are submitting information to an external page.\nAre you sure?&quot;);} catch (e) {return false;}">
-              <div>
-                  <input type="text" style="color:#f8f8f8">
-                  <label style="color:rgb(0,0,0,0.9)">Username</label>
-              </div>
-              <div>
-                    <input type="text" style="color:#f8f8f8">
-                    <label style="color:rgb(0,0,0,0.9)">Email ID</label>
-                </div>
-               
-              <div>
-                  <input type="password">
-                  <label style="color:rgb(0,0,0,0.9)">Password</label>
-              </div><br>
+	        <div class="card">
+	         	<div class="card-content">
+	            
+		            <span class="card-title" style="color:rgb(0,0,0,0.8);">WELCOME BACK</span><br><hr/><br/>
+		            <form  action="." method="POST"> {% csrf_token %}
+		              	<div class="input-field">
+		                  	<input id="username" name="username" type="text" class="validate" required="True" style="color:#f8f8f8;">
+		                  	<label for="username" style="color:rgb(0,0,0,0.9);">Username</label>
+		              	</div>
+		              	<div class="input-field">
+		                    <input id="email" name="email" type="text" class="validate" required="True" style="color:#f8f8f8;">
+		                    <label for="email" style="color:rgb(0,0,0,0.9);">Email ID</label>
+		                </div>
+		               
+		              	<div class="input-field">
+		                  	<input id="password" name="password" type="password" required="True" class="validate">
+		                  	<label for="password" style="color:rgb(0,0,0,0.9);">Password</label>
+		              	</div>
+		              	<br/>
 
 						<div>
-                
-    <p>Already have a Account? <a href="http://login.html" target="_blank">Login</a></p>					
-      </div><br>
-              <label>
-                  
-                  <button type="submit" name="action" style="width:100%">Register</button>
-                </label>
-            </form>  
-          </div>
-        </div>
-      </div>
+		   					<p class = "message">Already have a Account? <a href = "login.html">Login</a></p>					
+		      			</div>
+		      			<br/>
+		              	<label>		                  
+		                  	<button class="btn waves-effect waves-light" type="submit" name="action" style="width: 100%" >Register</button>
+		                </label>
+		            </form>  
+	          	</div>
+	        </div>
+      	</div>
     </div>
     
 
 
-    
-    
-          
-  </div>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   
- </body>
+</body>
 </html>

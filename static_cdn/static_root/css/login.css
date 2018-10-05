@@ -23,7 +23,7 @@ body{
 
   .bg-image {
   /* The image used */
-  background-image: url("image1-2.jpg");
+  /*background-image: url("../img/image1-2.jpg");*/
   
   /* Add the blur effect */
   filter: blur(5px);
