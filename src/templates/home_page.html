@@ -1,30 +1,251 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Home</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Home</title>
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+   
   </head>
   <body>
-    <h1>Hello, {{title}} !</h1>
+	<h1>Hello, {{title}} !</h1>
 
-    <a href="{% url 'logout' %}">Log Out</a>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+	<a href="{% url 'logout' %}">Log Out</a>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
   </body>
+</html> -->
+{% load static %}
+<!Doctype html>
+<html>
+	<head>
+
+	</head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+		<!-- <link rel="stylesheet" href="css/userprofile.css"> -->
+		<link rel="stylesheet" type="text/css" href="{% static 'css/userprofile.css' %}">
+		<!--Import Google Icon Font-->
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<!--Import Google Icon Font-->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!-- Compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	
+		<!-- Compiled and minified JavaScript --> 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+	<body>
+	
+	<input type="checkbox" id="secret-checkbox"/>
+
+	<div class="navbar-fixed">
+		<nav style="background-color: #fff">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo center" style="color:#000;font-family: 'Lobster', cursive;">MeetType</a>
+				<a href="{% url 'logout' %}" style="color:#000">
+				<ul class="right">
+					<li>Log Out</li>
+				</ul></a>
+			</div>
+		</nav>
+
+		<div class="toolbar-div" style="position:absolute;z-index:15;">
+			<label for="secret-checkbox" class="secret-label" style="color:black;position:absolute;z-index:15;">
+				<i class="material-icons prefix">menu</i>
+			</label> 
+		</div>
+	</div>
+
+	
+	<div class="nav-menu">
+		<button class="nav-item">Home</button>
+		<button class="nav-item">Gallery</button>
+		<button class="nav-item">About</button>
+	</div>
+			
+	<div class="container">
+		<div class="col s12 ">
+			<h2 class="header">{{ username }}</h2>
+			<div class="card horizontal" class="z-depth-5" style="border:1px solid ">
+			  	<div class="card-image">
+					<img src="http://images.contactmusic.com/newsimages/david_beckham_1133321.jpg" class="circle ">
+			  	</div>
+			  	<div class="card-stacked">
+					<div class="card-content">
+					  	<p>Managing Director of Webset.com</p>
+					</div>
+					<div class="card-action">
+					  	<a href="#">www.webset.com</a>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<!-- </div> -->
+	<div class="container">
+		<h2>
+			<small>MEETINGS</small>
+		</h2>
+		<div class="row">
+		    <div class="col s12 m6 offset-m4">
+
+		    	<!-- MODAL -->
+				<h5>ADD MEETING &nbsp;
+
+				<!-- MODAL TRIGGERS -->
+				<!-- <a href="#modal1" class="btn waves-effect"></a> -->
+				<a class="btn-floating btn-large waves-effect waves-light red"  href="#modal1"><i class="material-icons">add</i></a></h5>
+				<!-- MODAL STRUCTURE -->
+				<div id="modal1" class="modal" style="height:100%;">
+					<div class="modal-content" style="padding-top:0%;">
+						<form method="POST" action=".">
+							<div class="input-field col s12">
+								<input id="agenda" name="meetingname" type="text" class="validate" required>
+								<label for="agenda">MEETING NAME:</label>
+							</div>
+
+							{% for user in users %}
+							<label>
+								<input type="checkbox" class="filled-in" checked="checked" required/>
+								<span style=" color:rgba(0,0,0, 0.7);">{{ user.username }}</span><br/><br/>
+							</label>
+							{% endfor %}
+
+							<!-- <label>
+								<input type="checkbox" class="filled-in" checked="checked" required/>
+								<span style=" color:rgba(0,0,0, 0.7);">Mihir Shah</span><br/><br/>
+							</label>
+							<label>
+								<input type="checkbox" class="filled-in" checked="checked"  required/>
+								<span style=" color:rgba(0,0,0, 0.7);">Priyam Shah</span><br/><br/>
+							</label>
+							<label>
+								<input type="checkbox" class="filled-in" checked="checked" required />
+								<span style=" color:rgba(0,0,0, 0.7);">Sharvai Patil</span><br/><br/>
+							</label>
+							<label>
+								<input type="checkbox" class="filled-in" checked="checked"  required/>
+								<span style=" color:rgba(0,0,0, 0.7);">Rutwij Daptardar</span><br/><br/>
+							</label> -->
+							
+							<a onclick="ope();" style="cursor:pointer">TAP TO SELECT ALL</a><br/>
+
+							<label>Meeting Date</label>              
+							<input type="date" class="datepicker" required>
+							<label>Meeting Time</label>
+								   
+							<div class="row">
+							<div class="input-field col s12">
+									<label for="timepicker_ampm_dark"></label>
+									<input id="timepicker_ampm_dark" class="timepicker" type="time" required/>
+								</div>
+							</div>
+							<button class="btn waves-effect waves-light" type="submit" name="action" >Create Meeting</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+							<a href="" class="modal-action modal-close waves-effect waves-green"><i class="material-icons"margin-top:4%>cancel</i><span style="margin-bottom: 4%">Close</span></a>
+					</div>
+				</div>
+					  
+				  
+				  
+			</div> 
+		</div>
+				
+		{% for meeting in meetings %}	   
+			
+			<div class="row">
+				<div class="col s12">
+					<div class="card white ">
+						<div class="card-content" class="z-depth-5" style="border:1px solid blue">
+							<a href="{% url 'meeting' %}">
+								<span class="card-title" style="text-decoration:none;color: black">{{ meeting.meetingname }}</span>
+								<p style="text-decoration:none;color:black">10 members attended &nbsp; &nbsp; &nbsp; &nbsp;  Date: {{ meeting.datetime }} &nbsp; &nbsp; &nbsp; &nbsp;</p>
+							</a>
+						</div>						
+					</div>
+				</div>
+			</div>
+
+		{% endfor %}
+					  
+		<!-- <div class="row">
+			<div class="col s12 ">
+				<div class="card white">
+					<div class="card-content"class="z-depth-5" style="border:1px solid blue">
+						<a href="{% url 'meeting' %}">
+					 		<span class="card-title" style="text-decoration:none;color: black">Final Decision</span>
+					  		<p style="text-decoration:none;color:black">10 memebers attended &nbsp; &nbsp; &nbsp; &nbsp;  Date:14/09/2018 &nbsp; &nbsp; &nbsp; &nbsp;Time:14:00 hrs</p>
+						</a>
+					</div>							
+				</div>
+			</div>
+		</div>
+						  
+
+		<div class="row">
+			<div class="col s12 ">
+				<div class="card white">
+					<div class="card-content" class="z-depth-5" style="border:1px solid blue">
+						<a href="{% url 'meeting' %}">
+					 		<span class="card-title" style="text-decoration:none;color: black">Final Decision</span>
+					  		<p style="text-decoration:none;color:black">10 memebers attended &nbsp; &nbsp; &nbsp; &nbsp;  Date:14/09/2018 &nbsp; &nbsp; &nbsp; &nbsp;Time:14:00 hrs</p>
+						</a>
+					</div>				
+				</div>
+			</div>
+	  	</div>
+	</div> -->
+							  
+							  
+		
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// Init Modal
+		  	$('.modal').modal();
+		});
+	</script>
+
+	<script>
+		//Time Picker:
+		$('.timepicker').pickatime({
+			default: 'now',
+			twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
+			donetext: 'OK',
+		  	autoclose: false,
+		  	vibrate: true // vibrate the device when dragging clock hand
+		});
+
+		function ope(){
+		  	setTimeout(function(){
+				$('label').click();
+		  	},1);
+		}
+
+	</script>
+
+	<script>
+		$('.datepicker').pickadate({
+			selectMonths: true, // Creates a dropdown to control month
+			selectYears: 15 // Creates a dropdown of 15 years to control year
+		});
+	</script>
+
+
+</body>
 </html>

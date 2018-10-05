@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from django.contrib.auth import get_user_model
 import os
 
 from django.core.mail import send_mail
@@ -7,8 +8,13 @@ from django.core.mail import send_mail
 import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.stem import PorterStemmer
+from nltk.corpus import stopwords
 
 import string
+
+from .models import Meeting, MeetingAttendee, Team
+
+from .FrequencySummarizer import FrequencySummarizer
 
 keywords=[['frontend','front-end','responsive','color','theme','scheme','CSS','HTML','JS','javascript'],#frontend
 		  ['script','backend','back-end','database','query','object','script','python'],#backend
@@ -26,7 +32,7 @@ def nltk(request):
 	with open(MEDIA_ROOT+'/transcripts/transcript.txt', 'r') as myfile:
 		text=myfile.read().replace('\n','')	
 
-	# print(text)
+	print(text)
 
 	datas=word_tokenize(text)
 	# print(datas)
@@ -98,12 +104,37 @@ def nltk(request):
 			else:
 				decision_string = decision_string + datas[i]
 
-		# table=str.maketrans("", "", decision_string.punctuation)
-		# decision_string = decision_string.translate(table)
-
-		
+	print("~~~~~~~~~~~~~~~~~summariser code~~~~~~~~~~~~~~~")
+	
+	fs = FrequencySummarizer()
+	s = fs.summarize(str(text), 2)
+	print (s)	
 
 	context={
 		'datas':'hello'
 	}
 	return render(request, "Analyse/nltk.html", context)
+
+User=get_user_model()
+def meeting(request):
+
+	user=request.user
+	meeting=Meeting.objects.filter(conductor=request.user)
+	# print(meeting)
+	users=User.objects.exclude(username=request.user.username)
+	# print(users)
+
+	ma=[]
+
+	for i in meeting:
+		meetatten=MeetingAttendee.objects.filter(meeting=i)
+		for j in meetatten:
+			ma.append(j)		
+	
+
+	# print(ma)
+	context={
+		'datas':'hello',
+		'meetatten':ma
+	}
+	return render(request, "Analyse/meetings.html", context)

@@ -1,6 +1,8 @@
+import os
 from django.contrib.auth import get_user_model
 from django.db import models
 from datetime import datetime
+import random
 
 User=get_user_model()
 class Team(models.Model):
@@ -45,7 +47,7 @@ class MeetingAttendee(models.Model):
 	attendee 		=	models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'attendee')
 
 	def __str__(self):
-		return '%s %s %s' % (self.meeting.id, self.mconductor.id, self.attendee.id)
+		return '%s' % (self.attendee)
 
 class Decision(models.Model):
 	meeting 		=	models.ForeignKey(Meeting, on_delete=models.CASCADE)

@@ -1,0 +1,227 @@
+.section1 .col2.first img {
+	border-radius: 50%;
+	margin: 0 20px;
+	width: 120px;
+	border:2px solid #f1f1f1;
+	padding: 2px;
+	float: left;
+}
+
+
+
+/* 
+tr:hover{
+  cursor: pointer;
+  background-color: #ccc;
+} */
+.row{
+  width:auto;
+}
+
+
+
+/*wrapper element so column padding doesn't affect fixed header background*/
+.scroll-window-wrapper{
+    position:relative;
+  }
+  /* element containing the table */
+  .scroll-window{
+      height: 20rem;
+      overflow-x: hidden;
+      overflow-y: scroll;
+  }
+  .scroll-window table{
+    margin-bottom:0;
+  }
+      /*fixed header background*/
+  .scroll-window:before{
+      content:"";
+      position: absolute;
+      width:100%;
+      height:2.5rem;
+      display: table;
+      z-index: 10;
+      background:rgba(170,170,170,0.8);
+  }
+  
+  
+  /*the actual fixed header*/
+  table.fixed-header th div{
+    position: absolute;
+    margin-top: -.5rem;
+    z-index: 11;
+    color:#333;
+  }
+  table.fixed-header  thead tr{
+    height:2.5rem;
+  }
+  
+  .user-list{
+      width:100%;
+  }
+  
+  .user-list	td.text-right{
+      width:16rem;
+  }
+  .card-content{
+    text-decoration: none;
+    color: black;
+  }
+  /*-----experimental scrollbar styles-----*/
+  /* line 199, ../scss/main.scss */
+  #bodywrap ::-webkit-scrollbar {
+    width: 1rem;
+  }
+  /* line 202, ../scss/main.scss */
+  #bodywrap ::-webkit-scrollbar-button {
+    /* width:1rem;*/
+  }
+  /* line 205, ../scss/main.scss */
+  #bodywrap ::-webkit-scrollbar-track {
+    background-color: #eaeaea;
+    border-left: 1px solid #ccc;
+  }
+  /* line 212, ../scss/main.scss */
+  #bodywrap ::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+  }
+  /* line 215, ../scss/main.scss */
+  #bodywrap ::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+  }
+  
+  
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.navbar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+.navbar li {
+  list-style: none;
+  padding: 8px 8px 8px 32px;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.navbar li:hover, .offcanvas li:focus {
+  color: #f1f1f1;
+}
+.navbar .closeBtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+
+
+
+
+#secret-checkbox{
+  display: none;
+}
+.toolbar-div{
+  position: fixed;
+  top: 0px;
+  margin: 0px;
+  z-index: 10;
+  width: 100%;
+  min-height: 50px;
+  background-color: inherit;
+  display: flex;
+  flex-direction: row;
+}
+.secret-label{
+  font-size: 200%;
+  padding: 12px 20px;
+  color: white;
+  cursor: pointer;
+}
+.nav-menu{
+  z-index: 4;
+  width: 300px;
+  height: 100%;
+  position: fixed;
+  background-color: #fff;
+  opacity:0.9;
+  top: 55px;
+  left:-300px;
+  display: flex;
+  flex-direction: column;
+  transition: all 400ms ease-in-out;
+}
+#secret-checkbox:checked ~ .nav-menu{
+  left:0px;
+}
+#secret-checkbox:checked ~ .content{
+  margin-left: 150px;
+  transform: scale(0.8);
+}
+.heading{
+  color: #ffffff;
+  padding-left: 20px;
+}
+.nav-item{
+  margin: 5px;
+  height: 30px;
+  width: 90%;
+  color: #16aa85;
+  background-color: inherit;
+  border: 0px solid #16aa85;
+  transition: all 300ms ease-in-out;
+  opacity:1;
+}
+.nav-item:hover{
+  color: #2C3E50;
+  background-color: #16aa85;
+  cursor: pointer;
+}

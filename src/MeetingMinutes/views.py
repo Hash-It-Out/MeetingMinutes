@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from .forms import RegisterForm, LoginForm
 
+from Analyse.models import Meeting, MeetingAttendee
+
 User=get_user_model() 
 
 def index(request):
@@ -12,9 +14,20 @@ def index(request):
 	return render(request, "index.html", context)
 	# return HttpResponse("HELLo")
 
+#userprofile page
 def home_page(request):
+
+	user=request.user
+	meeting=Meeting.objects.filter(conductor=request.user)
+	print(meeting)
+	users=User.objects.exclude(username=request.user.username)
+	print(users)
+	# meetatten=MeetingAttendee.attendee.filter(meeting__id=meeting.id)
+
 	context = {
-		'title':request.user.username
+		'username':request.user.username,
+		'meetings':meeting,
+		'users':users
 	}
 	return render(request,"home_page.html",context)
 	#return HttpResponse("<h1>Hello World</h1>")
