@@ -1,0 +1,259 @@
+body, html{
+	height:100%;
+	margin:0;
+	font-size:16px;
+	font-family:"Lato", sans-serif;
+	font-weight:400;
+	line-height:1.8em;
+	color:#666;
+
+	background-color: #000;
+}
+
+.pimg1, .pimg2, .pimg3{
+	position:relative;
+	/*opacity:0.70;*/
+	background-position:center;
+	background-size:cover;
+	background-repeat:no-repeat;
+
+ 
+	background-attachment:fixed;
+}
+
+.pimg1{
+	background-image:url('../img/image1-2.jpg');
+	min-height:100%;
+	/*filter: grayscale(80%);*/
+	/*filter: brightness(0.5);*/
+}
+
+.overlay {
+	position: relative;
+}
+
+.overlay:before{
+	position: absolute;
+	background-color: rgba(33,37,41, 0.45);
+	/*background-color: rgba(40,47,53, 0.45);*/
+	content:" ";
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	display: block;
+	z-index:0;
+}
+
+
+.pimg3{
+	background-image:url('../img/image3.jpg');
+	min-height:100%;
+	/*filter: grayscale(100%);*/
+	/*filter:brightness(0.5);*/
+}
+
+.section{
+	text-align:center;
+	padding:50px 80px;
+	height: 100%;
+	/*position: relative;*/
+}
+
+.section-white{
+	background-color:white;
+	color:rgb(40, 47, 53);
+}
+.section-light{
+	background-color:rgb(40, 47, 53);
+	color: white;
+}
+
+.ptext{
+	position:absolute;
+	top:35%;
+	width:100%;
+	text-align:center;
+	color:#000;
+	font-size:50px;
+	letter-spacing:8px;
+	text-transform:uppercase;
+	/*text-shadow: 2px 2px #000;*/
+}
+
+
+.border-sign{
+	text-align:center;
+	padding-top:43%;
+	padding-bottom:43%;
+	background-color:rgba(33,37,41, 0.15);
+	/*padding:20px;*/
+	color: white;
+	font-size:40px;
+	cursor:pointer;
+	transition: all .2s ease-in-out;
+}
+
+.border-sign:hover{
+	
+	/*box-shadow: 5px 10px #000;*/
+	background-color:rgba(33,37,41, 0.45);
+	transform: scale(1.03);
+}
+
+.auth-box{
+	position:relative;
+}
+.ptext .border{
+	/*background-color:#111;*/
+	color:#fff;
+	/*padding:20px;*/
+}
+
+.ptext .border.trans{
+	background-color:transparent;
+}
+
+@media(max-width:568px){
+	.pimg1, .pimg2, .pimg3{
+		background-attachment:scroll;
+	}
+}
+
+
+/*navbar CSS*/
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.navbar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+.navbar li {
+  list-style: none;
+  padding: 8px 8px 8px 32px;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.navbar li:hover, .offcanvas li:focus {
+  color: #f1f1f1;
+}
+.navbar .closeBtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+
+
+
+
+#secret-checkbox{
+  display: none;
+}
+.toolbar-div{
+  position: fixed;
+  top: 0px;
+  margin: 0px;
+  z-index: 10;
+  width: 100%;
+  min-height: 50px;
+  background-color: inherit;
+  display: flex;
+  flex-direction: row;
+}
+.secret-label{
+  font-size: 200%;
+  padding: 12px 20px;
+  color: white;
+  cursor: pointer;
+}
+.nav-menu{
+  z-index: 4;
+  width: 300px;
+  height: 100%;
+  position: fixed;
+  background-color: #fff;
+  opacity:0.9;
+  top: 55px;
+  left:-300px;
+  display: flex;
+  flex-direction: column;
+  transition: all 400ms ease-in-out;
+}
+#secret-checkbox:checked ~ .nav-menu{
+  left:0px;
+}
+#secret-checkbox:checked ~ .content{
+  margin-left: 150px;
+  transform: scale(0.8);
+}
+.heading{
+  color: #ffffff;
+  padding-left: 20px;
+}
+.nav-item{
+  margin: 5px;
+  height: 30px;
+  width: 90%;
+  color: #16aa85;
+  background-color: inherit;
+  border: 0px solid #16aa85;
+  transition: all 300ms ease-in-out;
+  opacity:1;
+}
+.nav-item:hover{
+  color: #2C3E50;
+  background-color: #16aa85;
+  cursor: pointer;
+}

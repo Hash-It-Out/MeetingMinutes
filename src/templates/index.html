@@ -1,0 +1,227 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+  	<title></title>
+  		<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+  	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  	<!-- Compiled and minified CSS -->
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  	<!-- Compiled and minified JavaScript -->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		  
+</head>
+<body>
+
+	<input type="checkbox" id="secret-checkbox" />
+	<div class="toolbar-div">
+		<label for="secret-checkbox" class="secret-label">
+			<i class="material-icons prefix">menu</i>
+		</label> 
+	</div>
+	<div class="nav-menu">
+		<button class="nav-item">
+			Home
+		</button>
+		<button class="nav-item">
+			Gallery
+		</button>
+		<button class="nav-item">
+			About
+		</button>
+	</div>
+  
+  	<div class="pimg1 overlay" >
+		<div class="ptext">
+		  	<span class="border">
+				<p>WEBSITE NAME</p>
+		 	</span>
+		</div>
+  	</div>
+
+  	<section class="section section-light">
+	  	<h2>About Us</h2><br/><br/>
+	  	<div class="row">
+			<div class="col s12 m6">
+			  	<img src="{% static 'img/p1.jpg' %}" style="width : 80%;">
+			</div>
+			<div class="col s12 m6">
+			  	<p>
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum accusantium quaerat optio quisquam officiis expedita maiores illo suscipit quibusdam mollitia in sed architecto perferendis veniam velit corporis commodi reprehenderit enim a, impedit sequi beatae voluptate dignissimos corrupti. Placeat optio beatae asperiores facere? Error id reprehenderit commodi vitae dolor, explicabo aliquam!
+			  	</p>
+			</div>
+	  	</div>
+
+	
+  	</section>
+
+
+
+  	<div class="pimg3 overlay">
+	  	<div class="row">
+	  		<a href="{% url 'login' %}">
+			  	<div class="col s12 m6 auth-box" style="position:relative;">
+				  	<p class="border-sign">
+						SIGN IN    
+				  	</p>
+			  	</div>
+			</a>
+			<a href="{% url 'login' %}">
+		  		<div class="col s12 m6 auth-box" style="position:relative;">
+			  		<p class="border-sign">
+				  		SIGN UP    
+			 		</p>
+		  		</div>
+		 	</a>
+	   	</div>
+  	</div>
+
+    <!-- <div class="pimg3 overlay">
+	  	<div class="row">
+		  	<div class="col s12 m6" style="margin:0;padding:0">
+			  	<p class="border-sign" style="background-color:rgba(33,37,41, 0.15);height:100%;width:100%">
+					SIGN IN  
+			  	</p>
+		  	</div>
+		  	<div class="col s12 m6" style="margin:0;padding:0">
+			  	<p class="border-sign" style="background-color:rgba(33,37,41, 0.15);height:100%;width:100%">
+					SIGN UP   
+			 	</p>
+		  	</div>
+	   	</div>
+  	</div> -->
+
+	<section class="section section-white">
+		<div class="container">
+			<div class="row">
+				<h4 class="center">
+					<span class="black-text">Our</span> Team</h4><br/><br/>
+					<div class="col s12 m3">
+					<div class="card">
+						<div class="card-image">
+							<img src="{% static 'img/sample-1.jpeg' %}" alt="">
+							<span class="card-title">Sharvai Patil</span>
+						</div>
+						<div class="card-content">
+							CEO
+						</div>
+					</div>
+				</div>
+				<div class="col s12 m3">
+					<div class="card">
+						<div class="card-image">
+							<img src="{% static 'img/sample-2.jpeg' %}" alt="">
+							<span class="card-title">Priyam Shah</span>
+						</div>
+						<div class="card-content">
+							Senior Backend Developer
+						</div>
+					</div>
+				</div>
+				<div class="col s12 m3">
+					<div class="card">
+						<div class="card-image">
+							<img src="{% static 'img/sample-3.jpeg' %}" alt="">
+							<span class="card-title">Rutwij Daptardar</span>
+						</div>
+						<div class="card-content">
+							Social Media Handler Front End Developer
+						</div>
+					</div>
+				</div>
+				<div class="col s12 m3">
+					<div class="card">
+						<div class="card-image">
+							<img src="{% static 'img/sample-4.jpg' %}" alt="">
+							<span class="card-title">Mihir Shah</span>
+						</div>
+						<div class="card-content">
+							Senior Front End Developer
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+  	<section class="section section-light">
+	  	<h2>Contact US</h2><br/>
+		<div class="row">
+			<div class="col s12 m6">
+				<form>
+					<div class="row">
+						<div class="col s6"> 
+							<div class="input-field">
+								<i class="material-icons prefix">account_circle</i>
+								<input id="first_name" type="text" class="validate" required>
+								<label for="first_name"><span style="color: rgb(255,255,255,0.7);">First Name</span></label>
+							</div>
+						</div>
+						<div class="col s6">
+							<div class="input-field">
+								<div class="input-field">
+									<i class="material-icons prefix">account_box</i>
+									<input id="last_name" type="text" class="validate" required>
+									<label for="last_name"><span style="color: rgb(255,255,255,0.7);">Last Name</span></label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<div class="input-field">
+								<i class="material-icons prefix">email</i>
+								<input  id="mail" type="email" class="validate" required>
+								<label for="mail"><span style="color: rgb(255,255,255,0.7);">Email</span></label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<div class="input-field">
+								<i class="material-icons prefix">edit</i>
+								<input  id="subject" type="text" class="validate" required>
+								<label for="subject"><span style="color: rgb(255,255,255,0.7);">Subject</span></label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<i class="material-icons prefix">comment</i>
+							<textarea id="message" class="materialize-textarea" data-length="120" required></textarea>
+							<label for="message"><span style="color:rgb(255,255,255,0.7);">Message</span></label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s3">
+							<a class="waves-effect waves-light btn"><i class="material-icons right">send</i>Submit</a>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="s12 m6">
+				<br/><br/><br/>
+				<p style="padding: 0%;"><i class="material-icons prefix">call</i><a href="tel:0123456789"><span style="vertical-align: super;">7972881635</span></a></p><br>
+				<p><i class="material-icons prefix">email</i><a href = "mailto:mihir.ms555@gmail.com?subject = Feedback&body = Message"><span style="vertical-align: super;">mihir.ms555@gmail.com</span></a></p>
+				<address> 
+					K.J. Somaiya Polytechnic Hostel,<br>
+					Vidyavihar (East),<br>
+					Mumbai - 400077<br>
+					India<br>
+				</address>
+			</div>
+		</div>
+	</section>
+
+ 	
+</body>
+</html>

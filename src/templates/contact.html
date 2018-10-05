@@ -1,0 +1,14 @@
+ 
+<form method="POST">
+{% csrf_token %}
+  Full name :<br>
+  <input type="text" name="fullname" placeholder="Priyam">
+  <br>
+  Phone Number :<br>
+  <input type="text" name="contact" placeholder="87894561232">
+  <br>
+  Address :<br>
+  <textarea rows="2" cols="30" name="address"></textarea>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>

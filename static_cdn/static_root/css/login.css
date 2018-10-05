@@ -1,0 +1,85 @@
+body{
+  height:100vh;
+   /* background-image: url("image1-2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;*/
+
+    /* -webkit-filter: brightness(0.30);
+    filter: brightness(0.30); */
+
+  }
+
+* {
+  box-sizing: border-box;
+}
+  /*.container{
+    margin-left: auto; 
+    margin-right: auto;
+     z-index:-1;
+    -webkit-filter: brightness(0.50);filter: brightness(0.50); 
+  }*/
+
+  .bg-image {
+  /* The image used */
+  background-image: url("image1-2.jpg");
+  
+  /* Add the blur effect */
+  filter: blur(5px);
+  filter: contrast(5);
+  -webkit-filter: blur(5px);
+  
+  /* Full height */
+  height: 100%; /*
+  margin-top:-10px;
+  margin-left:-10px;*/
+  transform: scale(1.1);   
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow:hidden;
+}
+  
+  .card {
+    background-color:rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    animation: fadein 2s;
+    position: absolute;
+  top: 25%;
+  left: 40%;
+  width:320px;
+  }
+  
+  .card a:hover {
+    text-shadow: 2px 2px 4px #000000;
+  }
+  
+  .card hr{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0, 0.2);
+  }
+  
+  .card input:focus{
+    text-indent: 0px;
+    color: black;
+  }
+  
+  .card button{
+    font-weight: 600;
+    background: rgb(29,48,86);
+    color:rgb(248,248,248,0.7);
+  }
+  .card button:hover{
+    color:rgb(29,48,86);
+    background : rgb(248,248,248);
+  }
+  
+  .card-title{
+    text-align: center;
+  }
