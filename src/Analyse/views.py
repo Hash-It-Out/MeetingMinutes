@@ -1,0 +1,109 @@
+from django.shortcuts import render
+from django.http import HttpResponse, Http404
+import os
+
+from django.core.mail import send_mail
+
+import nltk
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.stem import PorterStemmer
+
+import string
+
+keywords=[['frontend','front-end','responsive','color','theme','scheme','CSS','HTML','JS','javascript'],#frontend
+		  ['script','backend','back-end','database','query','object','script','python'],#backend
+		  ['people','business','analyse']]#management
+
+def nltk(request):
+
+	# EXAMPLE_TEXT = "Hello Mr. Smith, how are you doing today? The weather is great, and Python is awesome. The sky is pinkish-blue. You shouldn't eat cardboard."
+
+	# text="Decide, the frontend team needs to make the website mobile reponsive decision end"
+
+	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+
+	with open(MEDIA_ROOT+'/transcripts/transcript.txt', 'r') as myfile:
+		text=myfile.read().replace('\n','')	
+
+	# print(text)
+
+	datas=word_tokenize(text)
+	# print(datas)
+	# print(datas[0])
+
+	#print ([i for i, item in enumerate(datas) if item == 'Decide'])
+
+	decision_string = str('')
+	decision=[]
+
+	frontend_score=0
+	backend_score=0
+	management_score=0
+
+	scores=[['Front-End Team',	0],
+			['Back-End Team', 	0],
+			['Management Team',	0]]
+
+	flag=False # to see if 'Decide' word was said
+
+	ps=PorterStemmer() # variable for stemming
+
+	for i in range(len(datas)):
+		# print(datas[i]+","+str(flag))
+		if datas[i].lower() == 'decide':
+			flag=True	
+
+		if flag==True and datas[i].lower() == 'decision' and datas[i+1].lower() == "end":
+			# print("hie")
+			flag=False
+			decision_string=decision_string.strip(' ')
+
+			print(decision_string)
+
+			# now doing the keyword matching using stemming
+			decision=word_tokenize(decision_string)
+			print(decision)
+
+			for j in range(len(decision)):
+				if decision[j] not in string.punctuation:
+					stemmed_word=ps.stem(decision[j])
+					print(stemmed_word)
+
+					# now checking if the stemmed word is in any of the keywords ka list and appropriately assigning scores
+					for x in range(len(keywords)):
+						for y in range(len(keywords[x])):
+							# print(str(x)+","+str(y))
+
+							if stemmed_word.lower() == ps.stem(keywords[x][y]) :
+								scores[x][1] = scores[x][1]+1
+
+			print(scores)
+			
+			score=[]
+			score.append(scores[0][1])
+			score.append(scores[1][1])
+			score.append(scores[2][1])
+
+			notify=score.index(max(score))
+			notify_team=scores[notify][0]
+			
+			print(notify_team)
+			decision_string=str('')
+
+		if flag==True :
+			# i=i+1
+			if datas[i] not in string.punctuation:
+				decision_string = decision_string + ' ' + datas[i]
+			else:
+				decision_string = decision_string + datas[i]
+
+		# table=str.maketrans("", "", decision_string.punctuation)
+		# decision_string = decision_string.translate(table)
+
+		
+
+	context={
+		'datas':'hello'
+	}
+	return render(request, "Analyse/nltk.html", context)

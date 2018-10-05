@@ -22,6 +22,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from .views import home_page,contact,login_user,signup_user,logout_user,index
+from Analyse.views import nltk
 
 urlpatterns = [
 	url(r'^$', index),
@@ -31,6 +32,7 @@ urlpatterns = [
     url(r'^logout/$', logout_user, name="logout"),
 	url(r'^contact$', contact),
     path('admin/', admin.site.urls),
+    url(r'^nltk/$', nltk, name="nltk"),
 ]
 
 if settings.DEBUG:

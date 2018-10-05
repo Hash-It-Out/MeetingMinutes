@@ -1,0 +1,1 @@
+Decide, the frontend team needs to make the website mobile reponsive decision end also, decide that the backend team needs to finish the database stuff decision end
