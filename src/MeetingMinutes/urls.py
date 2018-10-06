@@ -22,7 +22,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from .views import home_page,contact,login_user,signup_user,logout_user,index
-from Analyse.views import nltk,meeting
+from Analyse.views import nltk,meeting,transcript,calenda
 
 urlpatterns = [
 	url(r'^$', index),
@@ -34,6 +34,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^nltk/$', nltk, name="nltk"),
     url(r'^meeting/$', meeting, name="meeting"),
+    url(r'^transcript/$',transcript, name="transcript"),
+    url(r'^calenda/$',calenda, name="calenda"),
     # url(r'^transcript/$', transcript, name="transcript"),
 ]
 

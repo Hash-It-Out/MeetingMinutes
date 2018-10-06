@@ -110,7 +110,8 @@
 				<!-- MODAL STRUCTURE -->
 				<div id="modal1" class="modal" style="height:100%;">
 					<div class="modal-content" style="padding-top:0%;">
-						<form method="POST" action=".">
+						<form method="POST" action="calenda">
+							{% csrf_token %}
 							<div class="input-field col s12">
 								<input id="agenda" name="meetingname" type="text" class="validate" required>
 								<label for="agenda">MEETING NAME:</label>

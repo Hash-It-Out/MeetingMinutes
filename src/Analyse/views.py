@@ -25,6 +25,9 @@ from watson_developer_cloud import SpeechToTextV1
 from watson_developer_cloud.websocket import RecognizeCallback, AudioSource
 import threading
 import math
+from django.template import Template, Context
+from django.http import HttpResponse
+
 # Make it work for Python 2+3 and with Unicode
 try:
     to_unicode = unicode
@@ -87,7 +90,7 @@ def sttxt(request,filename,textfilepath,textfilename):
             	# print("Speaker "+str(l)+": "+str1+"\n")
             	str_ = outfile.write(" Speaker "+str(l)+": "+str1+"\n")
 
-            	kl.append(str_)
+            	kl.append("Speaker "+str(l)+": "+str1+"\n")
             outfile.close()
             l = i['speaker']
             del spea[0:len(spea)-1]
@@ -98,26 +101,42 @@ def sttxt(request,filename,textfilepath,textfilename):
     with io.open(textfilepath+'transcripts/'+textfilename+'/'+textfilename+".txt", 'a', encoding='utf8') as outfile:
     	# print("Speaker "+str(l)+": "+str1+"\n")
     	str_ = outfile.write(" Speaker "+str(l)+": "+str1+"\n")
-    	kl.append(str_)
+    	kl.append("Speaker "+str(l)+": "+str1+"\n")
     outfile.close()
     
-    print(kl)
+
 
     u = summary_function(textfilepath+'transcripts/'+textfilename+'/'+textfilename+".txt")
 
     print('vvvvvvvvvvvvvvvvvvv summarize VVVVVVVVVVVVVVVv')
 
     print(u)
+    print('------------------- decisions ------------------------------------')
+    decision=nltk(textfilepath+'transcripts/'+textfilename+'/'+textfilename+".txt")
+
+    print(decision)
+    request.session['summ'] = u
+    request.session['trans1'] = kl
+    request.session['deci'] = decision
 
     context={
     	'summarize':u,
     	'trans':kl,
-    	'flag':True
+
     }
 
-    # return render(request,'Analyse/transcript.html',context)
+    return render(request,'Analyse/transcript.html',context)
+    
+    #return render(request,'Analyse/transcript.html',context)
 
-    return HttpResponseRedirect(request.redirect_to('Analyse/transcript.html',context))
+def transcript(request):
+    context={
+    	'summarize':request.session['summ'],
+    	'trans':request.session['trans1'],
+    	'deci':request.session['deci'],
+    }
+
+    return render(request,'Analyse/transcript.html',context)
 
 def summary_function(textfilepathfinal):
 
@@ -126,28 +145,22 @@ def summary_function(textfilepathfinal):
 
 	fs = FrequencySummarizer()
 	s = fs.summarize(str(text), 2)
-	print (s)
 	return s
 
-def nltk(request):
-
-	# EXAMPLE_TEXT = "Hello Mr. Smith, how are you doing today? The weather is great, and Python is awesome. The sky is pinkish-blue. You shouldn't eat cardboard."
-
-	# text="Decide, the frontend team needs to make the website mobile reponsive decision end"
+def nltk(textfilepathfinal):
+# def nltk(request):
 
 	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 	MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
 
-	with open(MEDIA_ROOT+'/transcripts/transcript.txt', 'r') as myfile:
+	with open(textfilepathfinal, 'r') as myfile:
 		text=myfile.read().replace('\n','')	
+
+	# text="Decide, the frontend team needs to make the website mobile reponsive decision end"
 
 	print(text)
 
 	datas=word_tokenize(text)
-	# print(datas)
-	# print(datas[0])
-
-	#print ([i for i, item in enumerate(datas) if item == 'Decide'])
 
 	decision_string = str('')
 	decision=[]
@@ -163,6 +176,10 @@ def nltk(request):
 	flag=False # to see if 'Decide' word was said
 
 	ps=PorterStemmer() # variable for stemming
+
+	final_decisions=[]
+	# final_decisions=[[0 for x in range(100)] for y in range(100)]
+	z=0
 
 	for i in range(len(datas)):
 		# print(datas[i]+","+str(flag))
@@ -182,15 +199,15 @@ def nltk(request):
 
 			for j in range(len(decision)):
 				if decision[j] not in string.punctuation:
-					stemmed_word=ps.stem(decision[j])
-					print(stemmed_word)
+					# stemmed_word=ps.stem(decision[j])
+					# print(stemmed_word)
 
 					# now checking if the stemmed word is in any of the keywords ka list and appropriately assigning scores
 					for x in range(len(keywords)):
 						for y in range(len(keywords[x])):
 							# print(str(x)+","+str(y))
 
-							if stemmed_word.lower() == ps.stem(keywords[x][y]) :
+							if ps.stem(decision[j]).lower() == ps.stem(keywords[x][y]) :
 								scores[x][1] = scores[x][1]+1
 
 			print(scores)
@@ -203,26 +220,41 @@ def nltk(request):
 			notify=score.index(max(score))
 			notify_team=scores[notify][0]
 			
+			# final_decisions[z][0]=decision_string
+			# final_decisions[z][1]=notify_team
+			final_decisions.append(decision_string)
+			final_decisions.append(notify_team)
+
+			z=z+1
+
 			print(notify_team)
 			decision_string=str('')
 
-		if flag==True :
+		if flag==True and datas[i].lower() != 'speaker' and i!=0:
 			# i=i+1
-			if datas[i] not in string.punctuation:
-				decision_string = decision_string + ' ' + datas[i]
+			if datas[i] in string.punctuation:
+				
+				# if not any(p in datas[i] for p in string.punctuation):
+				# print(datas[i])
+				if datas[i] == ":" and datas[i-1].isdigit():
+					print("in")
+				else:
+					decision_string = decision_string + datas[i]
 			else:
-				decision_string = decision_string + datas[i]
 
-	print("~~~~~~~~~~~~~~~~~summariser code~~~~~~~~~~~~~~~")
-	
-	# fs = FrequencySummarizer()
-	# s = fs.summarize(str(text), 2)
-	# print (s)	
+				if (datas[i].isdigit()  and datas[i+1]== ":") or (i < len(datas) and datas[i] == datas[i+1]):
+					print("in")
+				else:
+					decision_string = decision_string + ' ' + datas[i]
+				
 
 	context={
 		'datas':'hello'
 	}
-	return render(request, "Analyse/nltk.html", context)
+	# return render(request, "Analyse/nltk.html", context)
+
+	# print(final_decisions)
+	return final_decisions
 
 User=get_user_model()
 
@@ -292,6 +324,15 @@ def meeting(request, *args, **kwargs):
 	# print(ma)
 	context={
 		'datas':'hello',
-		'meetatten':ma
+		'meetatten':ma,
+
 	}
 	return render(request, "Analyse/meetings.html", context)
+
+
+def calenda(request):
+
+	if method == 'POST':
+
+		agenda = request.POST['agenda']
+		print(agenda)

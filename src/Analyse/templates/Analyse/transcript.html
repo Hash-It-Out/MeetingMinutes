@@ -1,14 +1,244 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Transcript</title>
+{% load static %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name = "viewport" content = "width = device-width, initial-scale = 1">  
+	<!-- <link rel="stylesheet" href="css/meetings.css">     -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/meetings.css' %}">
+	<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">     
+    <title align="center">Transcript</title>
+<style>
+  .card-content{
+    text-decoration: none;
+    color: black;
+  }
+
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.navbar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+.navbar li {
+  list-style: none;
+  padding: 8px 8px 8px 32px;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.navbar li:hover, .offcanvas li:focus {
+  color: #f1f1f1;
+}
+.navbar .closeBtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+
+
+
+
+#secret-checkbox{
+  display: none;
+}
+.toolbar-div{
+  position: fixed;
+  top: 0px;
+  margin: 0px;
+  z-index: 10;
+  width: 100%;
+  min-height: 50px;
+  background-color: inherit;
+  display: flex;
+  flex-direction: row;
+}
+.secret-label{
+  font-size: 200%;
+  padding: 12px 20px;
+  color: white;
+  cursor: pointer;
+}
+.nav-menu{
+  z-index: 4;
+  width: 300px;
+  height: 100%;
+  position: fixed;
+  background-color: #fff;
+  opacity:0.9;
+  top: 55px;
+  left:-300px;
+  display: flex;
+  flex-direction: column;
+  transition: all 400ms ease-in-out;
+}
+#secret-checkbox:checked ~ .nav-menu{
+  left:0px;
+}
+#secret-checkbox:checked ~ .content{
+  margin-left: 150px;
+  transform: scale(0.8);
+}
+.heading{
+  color: #ffffff;
+  padding-left: 20px;
+}
+.nav-item{
+  margin: 5px;
+  height: 30px;
+  width: 90%;
+  color: #16aa85;
+  background-color: inherit;
+  border: 0px solid #16aa85;
+  transition: all 300ms ease-in-out;
+  opacity:1;
+}
+.nav-item:hover{
+  color: #2C3E50;
+  background-color: #16aa85;
+  cursor: pointer;
+}
+
+</style>
 </head>
 <body>
-	<h1>Transcript</h1>
-	<p>{{ kl }}</p>
+	<input type="checkbox" id="secret-checkbox"/>
 
-	<h2>Summary</h2>
-	<p>{{ summarize }}</p>
+	<div class="navbar-fixed">
+		<nav style="background-color: #fff">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo center" style="color:#000;font-family: 'Lobster', cursive;">MeetType</a>
+				
+				<ul class="right hide-on-med-and-down">
+					<li><a href="{% url 'logout' %}">Log Out</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="toolbar-div" style="position:absolute;z-index:15;">
+			<label for="secret-checkbox" class="secret-label" style="color:black;position:absolute;z-index:15;">
+				<i class="material-icons prefix">menu</i>
+			</label> 
+		</div>
+	</div>
+    <div class="container">
+        <div class="row">
+                <div class="col s12 ">
+                  <div class="card ">
+                    <div class="card-content ">
+                      <span class="card-title center-align" style="text-align: center; color: #fc4a1a; font-weight: 600;">Transcript</span>
+                      <!-- <p>I am a very simple card. I am good at containing small bits of information.
+                      I am convenient because I require little markup to use effectively.</p> -->
+				    	{% for i in trans %}
+						<p>{{i}}</p>
+						{% endfor %}
+                    </div>
+                    <!-- <div class="card-action">
+                      <a href="#">This is a link</a>
+                      <a href="#">This is a link</a>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+    
+              <div class="row">
+                    <div class="col s12 ">
+                      <div class="card ">
+                        <div class="card-content ">
+                          <span class="card-title center-align" style="text-align: center; color: #fc4a1a; font-weight: 600;">Summary</span>
+                          <!-- <p>I am a very simple card. I am good at containing small bits of information.
+                          I am convenient because I require little markup to use effectively.</p> -->
+                          <p>{{ summarize }}</p>
+                        </div>
+                        <!-- <div class="card-action">
+                          <a href="#">This is a link</a>
+                          <a href="#">This is a link</a>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+
+
+              <div class="row">
+                    <div class="col s12 ">
+                      <div class="card ">
+                        <div class="card-content ">
+                          <span class="card-title center-align" style="text-align: center; color: #fc4a1a; font-weight: 600;">Decision</span>
+                          <!-- <p>I am a very simple card. I am good at containing small bits of information.
+                          I am convenient because I require little markup to use effectively.</p> -->
+ 
+                          	<p>{{deci}}</p>
+                        </div>
+                        <!-- <div class="card-action">
+                          <a href="#">This is a link</a>
+                          <a href="#">This is a link</a>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+
+
+                  </div>
+
+	
+	
 </body>
 </html>
