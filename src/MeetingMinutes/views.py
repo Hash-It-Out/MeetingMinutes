@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from .forms import RegisterForm, LoginForm
 
-from Analyse.models import Meeting, MeetingAttendee
+from Analyse.models import Meeting, MeetingAttendee,upload_audio_path,get_filename_ext
 
 User=get_user_model() 
 
@@ -14,9 +14,11 @@ def index(request):
 	return render(request, "index.html", context)
 	# return HttpResponse("HELLo")
 
+
+
 #userprofile page
 def home_page(request):
-
+	
 	user=request.user
 	meeting=Meeting.objects.filter(conductor=request.user)
 	print(meeting)

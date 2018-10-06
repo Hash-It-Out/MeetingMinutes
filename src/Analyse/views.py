@@ -12,7 +12,7 @@ from nltk.corpus import stopwords
 
 import string
 
-from .models import Meeting, MeetingAttendee, Team
+from .models import Meeting, MeetingAttendee, Team, upload_audio_path,get_filename_ext
 
 from .FrequencySummarizer import FrequencySummarizer
 
@@ -116,7 +116,50 @@ def nltk(request):
 	return render(request, "Analyse/nltk.html", context)
 
 User=get_user_model()
-def meeting(request):
+
+def handle_uploaded_file(file, filename, foldername):
+    
+    print("--here--")
+    print(filename)
+
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+
+    foldername= MEDIA_ROOT+'/transcripts/'+foldername
+    if not os.path.exists(foldername):
+    	print("not exists")
+    	os.mkdir(foldername)
+
+    with open(MEDIA_ROOT+'/'+filename, 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+
+def meeting(request, *args, **kwargs):
+
+	print("hi")
+	if request.method == "POST":
+		print("haha")
+		print(request.FILES['recording'])
+
+		recording=upload_audio_path(request,str(request.FILES['recording']))
+
+		print(recording)
+
+		folder_name, ext=get_filename_ext(recording)
+
+		print(folder_name)
+
+		handle_uploaded_file(request.FILES['recording'], recording, folder_name)
+
+		BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+		MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+    	# foldername= MEDIA_ROOT+'/transcripts/'+foldername+'/'+
+
+		m=Meeting.objects.get(id=1)
+		# m.recording = 999  # change field
+		# t.save() # this will update only
+
+	print("hagre")
 
 	user=request.user
 	meeting=Meeting.objects.filter(conductor=request.user)
