@@ -1,5 +1,7 @@
+from __future__ import print_function
+
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth import get_user_model
 import os
 
@@ -16,9 +18,116 @@ from .models import Meeting, MeetingAttendee, Team, upload_audio_path,get_filena
 
 from .FrequencySummarizer import FrequencySummarizer
 
+
+import json,io
+from os.path import join, dirname
+from watson_developer_cloud import SpeechToTextV1
+from watson_developer_cloud.websocket import RecognizeCallback, AudioSource
+import threading
+import math
+# Make it work for Python 2+3 and with Unicode
+try:
+    to_unicode = unicode
+except NameError:
+    to_unicode = str
+
 keywords=[['frontend','front-end','responsive','color','theme','scheme','CSS','HTML','JS','javascript'],#frontend
 		  ['script','backend','back-end','database','query','object','script','python'],#backend
 		  ['people','business','analyse']]#management
+
+
+def sttxt(request,filename,textfilepath,textfilename):
+    kl = []
+    service = SpeechToTextV1(
+        username='80a593b1-5a21-4ea4-adb1-e7218fb5a9fa',
+        password='1RGsVJJw8BlB',
+        url='https://stream.watsonplatform.net/speech-to-text/api')
+
+    models = service.list_models().get_result()
+    #print(json.dumps(models, indent=2))
+
+    model = service.get_model('en-US_NarrowbandModel').get_result()
+    #print(json.dumps(model, indent=2))
+    # with open(join(dirname(__file__), filename),'rb') as audio_file:
+    print(filename)
+    with open(filename,'rb') as audio_file:
+        with io.open('data.json', 'w', encoding='utf8') as outfile:
+            str_ = json.dumps(service.recognize(audio=audio_file,content_type='audio/mp3',speaker_labels=True).get_result(),indent=2)
+            outfile.write(to_unicode(str_))
+
+        outfile.close()
+        
+
+    # Read JSON file
+    with open('data.json') as data_file:
+        data_loaded = json.load(data_file)
+    spea = []
+    l=0
+
+    for i in data_loaded['speaker_labels']:
+        temp = ""
+        if l == int(i['speaker']):
+            for z in range(math.floor(i['from']),math.ceil(i['to'])):
+                for v in data_loaded['results']:
+                    for m in v['alternatives']:
+                        for n in m['timestamps']:         
+                            if n[1] >= i['from'] and n[2] <= i['to']:
+                                if temp is not n[0]:
+                                    spea.append(n[0])
+                                    temp = n[0]
+                                
+                                #print(spea)
+                            
+                    
+        else:
+            str1 = ' '.join(spea)
+            print(textfilepath+'transcripts/'+textfilename+'/'+textfilename+".txt")
+            with io.open(textfilepath+'transcripts/'+textfilename+'/'+textfilename+".txt", 'a', encoding='utf8') as outfile:
+            	
+            	# print("Speaker "+str(l)+": "+str1+"\n")
+            	str_ = outfile.write(" Speaker "+str(l)+": "+str1+"\n")
+
+            	kl.append(str_)
+            outfile.close()
+            l = i['speaker']
+            del spea[0:len(spea)-1]
+            
+
+            
+    str1 = ' '.join(spea)
+    with io.open(textfilepath+'transcripts/'+textfilename+'/'+textfilename+".txt", 'a', encoding='utf8') as outfile:
+    	# print("Speaker "+str(l)+": "+str1+"\n")
+    	str_ = outfile.write(" Speaker "+str(l)+": "+str1+"\n")
+    	kl.append(str_)
+    outfile.close()
+    
+    print(kl)
+
+    u = summary_function(textfilepath+'transcripts/'+textfilename+'/'+textfilename+".txt")
+
+    print('vvvvvvvvvvvvvvvvvvv summarize VVVVVVVVVVVVVVVv')
+
+    print(u)
+
+    context={
+    	'summarize':u,
+    	'trans':kl,
+    	'flag':True
+    }
+
+    # return render(request,'Analyse/transcript.html',context)
+
+    return HttpResponseRedirect(request.redirect_to('Analyse/transcript.html',context))
+
+def summary_function(textfilepathfinal):
+
+	with open(textfilepathfinal, 'r') as myfile:
+		text=myfile.read().replace('\n','')	
+
+	fs = FrequencySummarizer()
+	s = fs.summarize(str(text), 2)
+	print (s)
+	return s
 
 def nltk(request):
 
@@ -106,9 +215,9 @@ def nltk(request):
 
 	print("~~~~~~~~~~~~~~~~~summariser code~~~~~~~~~~~~~~~")
 	
-	fs = FrequencySummarizer()
-	s = fs.summarize(str(text), 2)
-	print (s)	
+	# fs = FrequencySummarizer()
+	# s = fs.summarize(str(text), 2)
+	# print (s)	
 
 	context={
 		'datas':'hello'
@@ -153,11 +262,16 @@ def meeting(request, *args, **kwargs):
 
 		BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 		MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
-    	# foldername= MEDIA_ROOT+'/transcripts/'+foldername+'/'+
 
+		filepath=MEDIA_ROOT+'/'+recording
+		newfilepath=MEDIA_ROOT+'/'
+
+		print(filepath)
 		m=Meeting.objects.get(id=1)
-		# m.recording = 999  # change field
-		# t.save() # this will update only
+		m.recording = filepath  # change field
+		m.save() # this will update only
+
+		sttxt(request, filepath,newfilepath,folder_name)
 
 	print("hagre")
 

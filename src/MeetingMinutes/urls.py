@@ -34,6 +34,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^nltk/$', nltk, name="nltk"),
     url(r'^meeting/$', meeting, name="meeting"),
+    # url(r'^transcript/$', transcript, name="transcript"),
 ]
 
 if settings.DEBUG:
