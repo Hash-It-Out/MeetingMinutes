@@ -6,8 +6,6 @@ body, html{
 	font-weight:400;
 	line-height:1.8em;
 	color:#666;
-
-	background-color: #000;
 }
 
 .pimg1, .pimg2, .pimg3{
@@ -23,7 +21,6 @@ body, html{
 
 .pimg1{
 	background-image:url('../img/image1-2.jpg');
-  
 	min-height:100%;
 	/*filter: grayscale(80%);*/
 	/*filter: brightness(0.5);*/
@@ -78,7 +75,7 @@ body, html{
 	color:#000;
 	font-size:50px;
 	letter-spacing:8px;
-	text-transform:uppercase;
+	
 	/*text-shadow: 2px 2px #000;*/
 }
 
